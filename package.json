@@ -7,11 +7,24 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "db:migrate": "drizzle-kit generate:pg --config src/drizzle.config.ts "
   },
   "dependencies": {
     "@astrojs/check": "^0.4.1",
+    "@astrojs/node": "^7.0.4",
+    "@astrojs/tailwind": "^5.1.0",
+    "@supabase/supabase-js": "^2.39.3",
     "astro": "^4.1.2",
+    "drizzle-orm": "^0.29.3",
+    "drizzle-zod": "^0.5.1",
+    "pg": "^8.11.3",
+    "postgres": "^3.4.3",
+    "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.3.1",
+    "drizzle-kit": "latest"
   }
 }

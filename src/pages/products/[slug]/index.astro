@@ -1,0 +1,57 @@
+---
+export const prerender = true;
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getAllProductsWithRelations } from "@/repositories";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async () => {
+  const data = await getAllProductsWithRelations();
+
+  return data.map(
+    ({
+      slug,
+      product,
+      description,
+      Author: { id: authorId, name: authorName },
+      createdAt,
+    }) => {
+      return {
+        params: {
+          slug: slug,
+        },
+        props: {
+          product,
+          description,
+          authorId,
+          authorName,
+          createdAt,
+        },
+      };
+    },
+  );
+}) satisfies GetStaticPaths;
+
+const { product, description, authorId, authorName, createdAt } = Astro.props;
+---
+
+<BaseLayout title={product}>
+  <section class="min-h-dvh min-w-full bg-gray-50 p-4">
+    <h1 class="font-semibold text-3xl">Products - {product}</h1>
+    <section class="flex flex-col gap-4 p-4">
+      <section>
+        <p>Description:</p>
+        <p>{description}</p>
+      </section>
+      <section>
+        <p>Author</p>
+        <p>ID: {authorId}</p>
+        <p>Name: {authorName}</p>
+      </section>
+      <section>
+        <p>Created At</p>
+        <p>{createdAt ? new Date(createdAt).toDateString() : createdAt}</p>
+      </section>
+    </section>
+  </section>
+</BaseLayout>
